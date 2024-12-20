@@ -44,7 +44,28 @@ This project is a web application for real-time streaming, searching, and filter
 ### Backend
 ```
 /backend
-|-- index.js               # Backend server handling WebSocket and REST API
+│-- config
+│   │-- db.js                # MongoDB connection setup
+│
+│-- models
+│   │-- Log.js               # Mongoose schema and model for logs
+│
+│-- routes
+│   │-- search.js            # Search logs API route
+│   │-- filter.js            # Filter logs API route
+│
+│-- services
+│   │-- dockerLogs.js        # Docker log streaming logic
+│
+│-- utils
+│   │-- env.js               # Utility to load environment variables
+│
+│-- .env                     # Environment variables file (MongoDB URI, etc.)
+│-- .gitignore               # Git ignore file to exclude sensitive files
+│-- index.js                 # Main application entry point
+│-- package.json             # Node.js project metadata and dependencies
+│-- package-lock.json        # Dependency lockfile
+
 ```
 
 ## Setup Instructions
