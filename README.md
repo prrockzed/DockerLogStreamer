@@ -44,7 +44,7 @@ This project is a web application for real-time streaming, searching, and filter
 ### Backend
 ```
 /backend
-|-- server.js               # Backend server handling WebSocket and REST API
+|-- index.js               # Backend server handling WebSocket and REST API
 ```
 
 ## Setup Instructions
@@ -68,11 +68,11 @@ This project is a web application for real-time streaming, searching, and filter
    ```
 
 3. Configure MongoDB:
-   - Replace `your_mongodb_atlas_connection_string` in `server.js` with your MongoDB Atlas connection string.
+   - Replace `your_mongodb_atlas_connection_string` in `index.js` with your MongoDB Atlas connection string.
 
 4. Start the backend:
    ```bash
-   node server.js
+   node index.js
    ```
 
 ### Frontend Setup
