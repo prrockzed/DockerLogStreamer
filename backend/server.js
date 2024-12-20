@@ -12,10 +12,9 @@ const API_PORT = 8081; // Port for the REST API
 app.use(bodyParser.json());
 app.use(cors({ origin: "http://localhost:3000" }));
 
-
 // In-memory storage for logs
 let logs = [];
-const MAX_LOG_COUNT = 1000; // Maximum number of logs to keep in memory
+const MAX_LOG_COUNT = 1000
 
 // Start WebSocket server for live streaming
 let dockerLogs = null; // Keep track of the Docker log process
@@ -60,6 +59,39 @@ wss.on("connection", (ws) => {
       dockerLogs = null;
     }
   });
+});
+
+app.post("/api/search", (req, res) => {
+  try {
+    const { query } = req.body;
+    if (!query) return res.status(400).json({ error: "Query is required" });
+    const results = logs.filter((log) => log.message.includes(query));
+    res.json(results);
+  } catch (error) {
+    console.error("Error in /api/search:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post("/api/filter", (req, res) => {
+  try {
+    const { startTime, endTime } = req.body;
+    if (!startTime || !endTime) {
+      return res
+        .status(400)
+        .json({ error: "Both startTime and endTime are required" });
+    }
+
+    const results = logs.filter(
+      (log) =>
+        new Date(log.timestamp) >= new Date(startTime) &&
+        new Date(log.timestamp) <= new Date(endTime)
+    );
+    res.json(results);
+  } catch (error) {
+    console.error("Error in /api/filter:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 app.listen(API_PORT, () => {

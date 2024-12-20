@@ -1,5 +1,4 @@
 import time
-from datetime import datetime
 import sys
 
 messages = [
@@ -17,13 +16,13 @@ messages = [
 
 
 def generate_logs():
+    time.sleep(100)
     counter = 0
     while True:
-        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"{current_time} - {messages[counter % 10]}")
+        print(f"{messages[counter % 10]}")
         sys.stdout.flush()
         counter += 1
-        time.sleep(3)
+        time.sleep(5)
 
 if __name__ == "__main__":
     generate_logs()
