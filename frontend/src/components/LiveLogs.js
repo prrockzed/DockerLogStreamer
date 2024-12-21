@@ -1,6 +1,9 @@
 import React from "react";
 
 const LiveLogs = ({ logs }) => {
+  // Ensure only the last 20 logs are displayed
+  const visibleLogs = logs.slice(-20);
+
   return (
     <div
       style={{
@@ -9,7 +12,7 @@ const LiveLogs = ({ logs }) => {
         border: "1px solid black",
       }}
     >
-      {logs.map((log, index) => (
+      {visibleLogs.map((log, index) => (
         <div key={index}>
           <strong>{log.timestamp}:</strong> {log.message}
         </div>
