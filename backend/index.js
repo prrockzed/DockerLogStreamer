@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const WebSocket = require("ws");
 const http = require("http"); // Import http module
-// const { startDockerLogs, stopDockerLogs } = require("./services/dockerLogs");
+const { startDockerLogs, stopDockerLogs } = require("./services/dockerLogs");
 const connectToDatabase = require("./config/db");
 require("./utils/env");
 
@@ -37,14 +37,14 @@ wss.on("connection", (ws) => {
   clients += 1;
   console.log("Client connected. Total clients:", clients);
 
-  // startDockerLogs(wss);
+  startDockerLogs(wss);
 
   ws.on("close", () => {
     clients -= 1;
     console.log("Client disconnected. Total clients:", clients);
 
     if (clients === 0) {
-      // stopDockerLogs();
+      stopDockerLogs();
     }
   });
 });
