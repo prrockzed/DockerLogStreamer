@@ -12,7 +12,7 @@ const LogViewer = () => {
   // WebSocket for live logs
   useEffect(() => {
     // const socket = new WebSocket("ws://localhost:8080");
-    const socket = new WebSocket("ws://dockerlogstreamer.onrender.com");
+    const socket = new WebSocket("wss://dockerlogstreamer.onrender.com");
 
     socket.onmessage = (event) => {
       const log = JSON.parse(event.data);
