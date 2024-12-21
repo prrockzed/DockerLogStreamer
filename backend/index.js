@@ -20,7 +20,14 @@ connectToDatabase();
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors({ origin: process.env.CLIENT_URL }));
+app.use(
+  cors({
+    origin: "https://docker-log-streamer.vercel.app", // Frontend domain
+    methods: ["GET", "POST"], // Allowing specific HTTP methods
+  })
+);
+
+// app.use(cors({ origin: process.env.CLIENT_URL }));
 // app.use(cors({ origin: "http://localhost:3000" }));
 
 // WebSocket connection handling
