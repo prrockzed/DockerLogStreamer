@@ -6,8 +6,8 @@ const { startDockerLogs, stopDockerLogs } = require("./services/dockerLogs");
 const connectToDatabase = require("./config/db");
 require("./utils/env");
 
-const PORT = 8080;
-const API_PORT = 8081;
+const PORT = process.env.PORT || 8080;
+const API_PORT = process.env.API_PORT || 8081;
 
 const app = express();
 const wss = new WebSocket.Server({ port: PORT });
@@ -15,7 +15,8 @@ const wss = new WebSocket.Server({ port: PORT });
 connectToDatabase();
 
 app.use(bodyParser.json());
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: "https://docker-log-streamer.vercel.app/" }));
+// app.use(cors({ origin: "http://localhost:3000" }));
 
 // WebSocket connection handling
 let clients = 0;
