@@ -1,5 +1,8 @@
+from flask import Flask, jsonify
 import time
-import sys
+import threading
+
+app = Flask(__name__)
 
 messages = [
     "Why do programmers hate nature? It has too many bugs.",
@@ -24,16 +27,23 @@ messages = [
     "Why programmers prefer laptops over desktops? They like to work anywhere with their private keys."
 ]
 
-
+log_buffer = []  # Buffer to store logs
+counter = 0
 
 def generate_logs():
-    time.sleep(50)
-    counter = 0
+    global counter
     while True:
-        print(f"{messages[counter % 20]}")
-        sys.stdout.flush()
+        log_message = messages[counter % len(messages)]
+        log_buffer.append(log_message)
+        if len(log_buffer) > 50:  # Keep only the last 50 logs
+            log_buffer.pop(0)
         counter += 1
-        time.sleep(10)
+        time.sleep(3000)
+
+@app.route("/logs", methods=["GET"])
+def get_logs():
+    return jsonify(log_buffer)
 
 if __name__ == "__main__":
-    generate_logs()
+    threading.Thread(target=generate_logs, daemon=True).start()
+    app.run(host="0.0.0.0", port=80)
