@@ -25,4 +25,5 @@ yarn-error.log*
 
 # others
 /backend/.env
+/frontend/.env
 hello.txt

@@ -2,20 +2,25 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const WebSocket = require("ws");
+const http = require("http"); // Import http module
 const { startDockerLogs, stopDockerLogs } = require("./services/dockerLogs");
 const connectToDatabase = require("./config/db");
 require("./utils/env");
 
-const PORT = process.env.PORT || 8080;
-const API_PORT = process.env.API_PORT || 8081;
+// Ports
+const PORT = process.env.PORT || 8080; // Single port for both WebSocket and REST API
 
+// Initialize app and server
 const app = express();
-const wss = new WebSocket.Server({ port: PORT });
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server }); // Attach WebSocket to the same server
 
+// Connect to MongoDB
 connectToDatabase();
 
+// Middleware
 app.use(bodyParser.json());
-app.use(cors({ origin: "https://docker-log-streamer.vercel.app/" }));
+app.use(cors({ origin: process.env.CLIENT_URL }));
 // app.use(cors({ origin: "http://localhost:3000" }));
 
 // WebSocket connection handling
@@ -44,8 +49,7 @@ const filterRoutes = require("./routes/filter");
 app.use("/api", searchRoutes);
 app.use("/api", filterRoutes);
 
-app.listen(API_PORT, () => {
-  console.log(`REST API server is running on http://localhost:${API_PORT}`);
+// Start the combined server
+server.listen(PORT, () => {
+  console.log(`Server is running on PORT: ${PORT}`);
 });
-
-console.log(`WebSocket server is running on ws://localhost:${PORT}`);
