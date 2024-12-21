@@ -4,7 +4,6 @@ WORKDIR /app
 
 COPY logger.py .
 
-# Install Flask
 RUN pip install flask
 
 CMD ["python3", "logger.py"]
