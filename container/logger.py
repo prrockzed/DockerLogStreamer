@@ -34,12 +34,13 @@ buffer_size = 50  # Maximum number of logs to store in the buffer
 
 
 def generate_logs():
+    time.sleep(100)
     global counter
     while True:
         log_message = messages[counter % len(messages)]
         timestamped_message = f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {log_message}"
         
-        # Print and flush the message to simulate streaming
+        # Print and flush the message
         print(timestamped_message)
         sys.stdout.flush()
         
@@ -49,7 +50,7 @@ def generate_logs():
             log_buffer.pop(0)
         
         counter += 1
-        time.sleep(1)  # Generate a log every second
+        time.sleep(10)  # Generate a log every 10 second
 
 
 @app.route("/logs", methods=["GET"])
