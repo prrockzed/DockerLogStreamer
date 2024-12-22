@@ -49,7 +49,7 @@ def generate_logs():
             log_buffer.pop(0)
         
         counter += 1
-        time.sleep(3000)  # Generate a log every second
+        time.sleep(1)  # Generate a log every second
 
 
 @app.route("/logs", methods=["GET"])

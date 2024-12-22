@@ -1,0 +1,26 @@
+/* src/styles/LogViewer.css */
+.logviewer {
+  padding: 10px 40px;
+}
+
+.handlesearch {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.handlefilter {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.livelogs {
+  padding-top: 10px;
+}
+
+.searchlogs {
+  padding-top: 20px;
+}
+
+.filterlogs {
+  padding-top: 20px;
+}

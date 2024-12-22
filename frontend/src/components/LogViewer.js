@@ -3,6 +3,7 @@ import LiveLogs from "./LiveLogs";
 import SearchLogs from "./SearchLogs";
 import FilterLogs from "./FilterLogs";
 import { searchLogs, filterLogs } from "../services/api";
+import "../styles/LogViewer.css";
 
 const LogViewer = () => {
   const [liveLogs, setLiveLogs] = useState([]);
@@ -33,15 +34,18 @@ const LogViewer = () => {
   };
 
   return (
-    <div>
-      <h1>Docker Logs Viewer</h1>
-      <SearchLogs onSearch={handleSearch} />
-      <FilterLogs onFilter={handleFilter} />
-      <h2>Live Logs</h2>
+    <div className="logviewer">
+      <div className="handlesearch">
+        <SearchLogs onSearch={handleSearch} />
+      </div>
+      <div className="handlefilter">
+        <FilterLogs onFilter={handleFilter} />
+      </div>
+      <h2 className="livelogs">Live Logs</h2>
       <LiveLogs logs={liveLogs} />
-      <h2>Search Results</h2>
+      <h2 className="searchlogs">Search Results</h2>
       <LiveLogs logs={searchResults} />
-      <h2>Filtered Logs</h2>
+      <h2 className="filterlogs">Filtered Logs</h2>
       <LiveLogs logs={filteredLogs} />
     </div>
   );
