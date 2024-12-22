@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 import time
 import sys
 import threading
+import random
 
 app = Flask(__name__)
 
@@ -33,12 +34,28 @@ counter = 0
 buffer_size = 50  # Maximum number of logs to store in the buffer
 
 
+def get_ist_time():
+    utc_time = time.gmtime()
+
+    ist_hour = (utc_time.tm_hour + 5) % 24
+    ist_minute = (utc_time.tm_min + 30)
+
+    # Adjust for overflow of minutes
+    if ist_minute >= 60:
+        ist_minute -= 60
+        ist_hour = (ist_hour + 1) % 24
+
+    # Format the time as a string
+    return f"{utc_time.tm_year}-{utc_time.tm_mon:02}-{utc_time.tm_mday:02} {ist_hour:02}:{ist_minute:02}:{utc_time.tm_sec:02}"
+
+
 def generate_logs():
     time.sleep(100)
     global counter
     while True:
-        log_message = messages[counter % len(messages)]
-        timestamped_message = f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {log_message}"
+        log_message = random.choice(messages)
+        current_time = get_ist_time()
+        timestamped_message = f"{current_time} - {log_message}"
         
         # Print and flush the message
         print(timestamped_message)
@@ -50,7 +67,7 @@ def generate_logs():
             log_buffer.pop(0)
         
         counter += 1
-        time.sleep(10)  # Generate a log every 10 second
+        time.sleep(10)
 
 
 @app.route("/logs", methods=["GET"])
